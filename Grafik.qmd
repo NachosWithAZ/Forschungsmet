@@ -1,0 +1,36 @@
+##Grafik
+```{r}
+#| label: tbl-Arithmetische und Geometrische Mittel
+#| tbl-cap: "Wertetabelle 1-100 von AM GM"
+#| echo: TRUE
+
+library(pacman)
+library(ggplot2)
+p_load(tidyverse, rio, flextable)
+
+Tabelle1100 = (import("Documents/GMAM1-100.xlsx", na="NA", col_names=TRUE) %>% as_tibble())
+
+Tabelle1100%>% slice(1:15) %>% 
+  flextable %>% 
+  flextable::autofit() %>% 
+  flextable::colformat_num(big.mark="") %>% 
+  flextable::align(align="center")
+
+Tabelle1100%>%
+ggplot(aes(x=AM1100 , y = GM1100)) +
+          geom_point(alpha = 2, color = "purple")+
+          geom_line()+
+          labs(x = "Arithmetische Mittel" , 
+               y = "Geometrische Mittel" )
+Tabelle1100%>%
+ggplot(aes(x = AM1100, y = Zahlen1100) ) + 
+          geom_point(alpha = 0.5 , color = "pink",size= 1.8)+
+          geom_smooth(color = "brown")
+          labs(x = "Arithmetische Mittel" , 
+               y = "n" ) 
+Tabelle1100%>%
+ggplot(aes(x = GM1100, y = Zahlen1100)) + 
+          geom_point(alpha = 0.5 , color = "blue", size = 2)+
+          geom_line(color= "dark green")+
+          labs(x = "Geometrische Mittel" , 
+               y = "n" ) 
